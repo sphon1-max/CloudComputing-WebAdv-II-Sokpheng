@@ -159,132 +159,33 @@
     style="right: 15px; top: 15px; background: rgba(255,255,255,0.1); border-radius: 8px;">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <!-- Search Section -->
-  <div class="flex-grow-1 mx-3 d-none d-lg-block">
-    <div class="search-container mx-auto">
-      <input class="form-control search-input" type="text"
-        placeholder="Search events, organizers, users..." aria-label="Search" id="headerSearch">
-    </div>
+  <div class="nav-item me-3 d-flex align-items-center text-white">
+    <form id="logoutForm" action="{{ route('admin.logout') }}" method="GET">
+      <select id="admin-action" class="form-select form-select-sm border-0"
+              style="width: auto; font-size: 20px;" onchange="handleAdminAction(this)">
+        <option value="" disabled selected hidden>{{ Auth::guard('admin')->user()->name ?? 'Admin' }}</option>
+        <option value="logout">Logout</option>
+      </select>
+    </form>
   </div>
+  <script>
+    function handleAdminAction(select) {
+      if (select.value === "logout") {
+        document.getElementById('logoutForm').submit();
+      }
+    }
+  </script>
 
-  <!-- Right Side - Compact Design -->
-  <div class="d-flex align-items-center admin-section">
-    <!-- Notifications - Only on larger screens -->
-    <div class="position-relative me-2 d-none d-xl-block">
-      <i class="fas fa-bell header-icon"></i>
-      <span class="notification-badge">3</span>
-    </div>
 
-    <!-- Quick Stats - Only on very large screens -->
-    <div class="d-none d-xxl-flex align-items-center me-2">
-      <small class="text-white-50">
-        <i class="fas fa-calendar-check me-1"></i>
-        <span id="live-events-count">{{ session('events_count', '0') }}</span>
-      </small>
-    </div>
+  <script>
+    function handleAdminAction(select) {
+      if (select.value === "logout") {
+        document.getElementById('logoutForm').submit();
+      }
+    }
+  </script>
 
-    <!-- Admin Section - Simplified -->
-    <div class="d-flex align-items-center">
-      <div class="bg-white rounded-circle d-flex align-items-center justify-content-center me-2"
-        style="width: 32px; height: 32px;">
-        <i class="fas fa-user-shield text-primary" style="font-size: 14px;"></i>
-      </div>
-
-      <div class="d-none d-md-block me-2">
-        <small class="text-white fw-bold">{{ session('admin_first_name', 'Admin') }}</small>
-      </div>
-
-      <!-- Dropdown Menu -->
-      <div class="dropdown">
-        <button class="btn btn-sm text-white border-0" type="button"
-          data-bs-toggle="dropdown" aria-expanded="false"
-          style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 5px 10px;">
-          <i class="fas fa-chevron-down"></i>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end" style="min-width: 150px;">
-          <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
-          <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li>
-            <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}"
-              onclick="return confirm('Are you sure you want to logout?')">
-              <i class="fas fa-sign-out-alt me-2"></i>Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+    
+  
 </header>
 
-<script>
-  // Enhanced search functionality
-  document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('headerSearch');
-
-    if (searchInput) {
-      // Enhanced search with debouncing
-      let searchTimeout;
-      searchInput.addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase().trim();
-
-        // Clear previous timeout
-        clearTimeout(searchTimeout);
-
-        // Debounce search by 300ms
-        searchTimeout = setTimeout(() => {
-          if (searchTerm.length >= 2) {
-            performSearch(searchTerm);
-          } else if (searchTerm.length === 0) {
-            clearSearchResults();
-          }
-        }, 300);
-      });
-
-      // Handle Enter key
-      searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          const searchTerm = e.target.value.toLowerCase().trim();
-          if (searchTerm.length >= 2) {
-            performSearch(searchTerm);
-          }
-        }
-      });
-    }
-  });
-
-  function performSearch(searchTerm) {
-    console.log('Searching for:', searchTerm);
-
-    // Here you can add actual search functionality
-    // For example: redirect to a search results page
-    // window.location.href = `/search?q=${encodeURIComponent(searchTerm)}`;
-
-    // Or show a dropdown with search results
-    showSearchSuggestions(searchTerm);
-  }
-
-  function showSearchSuggestions(searchTerm) {
-    // Placeholder for search suggestions
-    // You can implement a dropdown with search results here
-    console.log('Showing suggestions for:', searchTerm);
-  }
-
-  function clearSearchResults() {
-    // Clear any search results or suggestions
-    console.log('Clearing search results');
-  }
-
-  // Update live stats (placeholder)
-  function updateLiveStats() {
-    // This would fetch real-time data from your API
-    // For now, it's just a placeholder
-  }
-
-  // Update stats every 30 seconds
-  setInterval(updateLiveStats, 30000);
-</script>

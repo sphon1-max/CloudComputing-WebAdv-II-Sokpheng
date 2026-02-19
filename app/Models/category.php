@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Events;
 
-class category extends Model
+class Category extends Model
 {
-    protected $table = "category";
-    protected $primaryKey = "category_id";
+    protected $table = "categories";
+    protected $primaryKey = "id";
 
 
 

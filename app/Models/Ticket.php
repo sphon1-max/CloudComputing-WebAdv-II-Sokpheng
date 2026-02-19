@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $table = "ticket";
-    protected $primaryKey = "ticket_id";
+    protected $table = "tickets";
+    protected $primaryKey = "id";
    
     public function event()
     {

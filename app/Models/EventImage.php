@@ -9,9 +9,9 @@ class EventImage extends Model
 {
     use HasFactory;
 
-    protected $table = 'eventimage'; // 👈 or use 'eventimages' if that's your table name
+    protected $table = 'event_images'; // 👈 or use 'eventimages' if that's your table name
 
-    protected $primaryKey = 'event_id';
+    protected $primaryKey = 'id';
 
     public function events()
     {

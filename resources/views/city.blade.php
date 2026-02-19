@@ -7,7 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Dashboard Template · Bootstrap v5.0</title>
-
+  <link rel="icon" type="image/png" href="{{ asset('assets/image/mylogo.png') }}">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
     
@@ -62,13 +62,13 @@
           <tbody>
           @foreach($v_city as $city)
             <tr>
-              <td>{{ $city->city_id }}</td>
+              <td>{{ $city->id }}</td>
               <td>{{ $city->name }}</td>
               <td>{{ $city->events_count }}</td>
                   
               <td>
                 <div class="d-flex gap-2">
-                  <form action="{{ route('city.destroyCity', $city->city_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this City?');">
+                  <form action="{{ route('city.destroyCity', $city->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this City?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>

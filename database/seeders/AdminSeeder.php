@@ -16,10 +16,10 @@ class AdminSeeder extends Seeder
     {
   
         Admin::create([
-            'first_name' => 'Sokpheng',
-            'last_name' => 'Phon',
-            'email' => 'sokpheng234@gmail.com',
-            'password' => Hash::make('Admin123'), 
+            'Name' => 'KHEvent',
+            'email' => 'admin@kh-events.local',
+            'password' => Hash::make('admin123'), 
+            
         ]);
     
     }

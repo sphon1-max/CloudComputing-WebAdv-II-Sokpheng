@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $table = "payment";
-    protected $primaryKey="payment_id";
+    protected $table = "payments";
+    protected $primaryKey="id";
 
-    public function userticket()
+    public function users()
     {
-        return $this->belongsTo(Userticket::class, 'user_ticket_id', 'user_ticket_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class, 'ticket_id');
+    }
+    
 }

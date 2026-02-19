@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons (optional) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/png" href="{{ asset('assets/image/mylogo.png') }}">
     <style>
         * {
             margin: 0;
@@ -387,10 +388,6 @@
 </head>
 
 <body>
-    <div class="api-status" id="apiStatus">
-        <span>Checking API...</span>
-    </div>
-
     <div class="login-container">
         <div class="logo-section">
             <div class="logo">

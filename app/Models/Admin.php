@@ -3,13 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    protected $table = 'admin'; // 👈 match your actual table name
-    protected $primaryKey = 'admin_id'; // 👈 if not using 'id'
-    public $timestamps = false; // 👈 add this if no created_at/updated_at
+    protected $table = 'admin'; // if your table is not 'admins'
+    protected $primaryKey = 'admin_id';
+    
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
-    protected $fillable = ['first_name', 'last_name', 'email', 'password'];
-    protected $hidden = ['password'];
+    protected $hidden = [
+        'password',
+    ];
 }

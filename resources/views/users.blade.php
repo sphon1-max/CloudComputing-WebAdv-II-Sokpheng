@@ -7,7 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Dashboard Template · Bootstrap v5.0</title>
-
+    <link rel="icon" type="image/png" href="{{ asset('assets/image/mylogo.png') }}">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
     
@@ -53,24 +53,21 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Firts Name</th>
-              <th scope="col">Last Name</th>
+              <th scope="col">Name</th>
               <th scope="col">Email</th>
-              <th scope="col">Phone Number</th>
+             
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
           @foreach($v_user as $user)
             <tr>
-              <td>{{ $user->user_id }}</td>
-              <td>{{ $user->first_name }}</td>
-              <td>{{ $user->last_name }}</td>
+              <td>{{ $user->id }}</td>
+              <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
-              <td>{{ $user->phone_number }}</td>
               <td>
                 <div class="d-flex gap-2">
-                  <form action="{{ route('Users.destroyUser', $user->user_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                  <form action="{{ route('Users.destroyUser', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>

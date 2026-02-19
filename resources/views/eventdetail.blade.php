@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Event Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{{ asset('assets/image/mylogo.png') }}">
 </head>
 
 <body class="bg-gray-100 font-sans">
@@ -14,44 +15,43 @@
         <div class="space-y-4">
             <div>
                 <label class="block text-gray-600 font-semibold">Event ID</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event['id'] ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event->id }}" readonly>
             </div>
             <div>
                 <label class="block text-gray-600 font-semibold">Organizer Name</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event['organizer']['name'] ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event->organizer->name }}" readonly>
             </div>
             <div>
                 <label class="block text-gray-600 font-semibold">Organizer Email</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event['organizer']['email'] ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event->organizer->email }}" readonly>
             </div>
-            <div>
-                <label class="block text-gray-600 font-semibold">Organizer Phone</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event['organizer']['phone_number'] ?? 'N/A' }}" readonly>
-            </div>
+
             <div>
                 <label class="block text-gray-600 font-semibold">Event Name</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event['event_name'] ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event->title }}" readonly>
             </div>
             <div>
                 <label class="block text-gray-600 font-semibold">Category</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event['category']['category_name'] ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $event->category->name }}" readonly>
             </div>
             <div>
                 <label class="block text-gray-600 font-semibold">Seats</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $maxSeats ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="{{ $maxSeats }}" readonly>
+
+
             </div>
             <div>
                 <label class="block text-gray-600 font-semibold">Location</label>
-                <input class="w-full bg-yellow-100 rounded p-2" value="City: {{ $event['city']['name'] ?? 'N/A' }}, Address: {{ $event['address'] ?? 'N/A' }}" readonly>
+                <input class="w-full bg-yellow-100 rounded p-2" value="City: {{ $event->city->name }}, Venue: {{ $event->venue }}" readonly>
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="block text-gray-600 font-semibold">Start</label>
-                    <input class="w-full bg-yellow-100 rounded p-2" value="{{ isset($event['start_date']) ? \Carbon\Carbon::parse($event['start_date'])->format('Y-m-d H:i') : 'N/A' }}" readonly>
+                    <input class="w-full bg-yellow-100 rounded p-2" value="{{ \Carbon\Carbon::parse($event->start_date)->format('Y-m-d H:i') }}" readonly>
                 </div>
                 <div>
                     <label class="block text-gray-600 font-semibold">End</label>
-                    <input class="w-full bg-yellow-100 rounded p-2" value="{{ isset($event['end_date']) ? \Carbon\Carbon::parse($event['end_date'])->format('Y-m-d H:i') : 'N/A' }}" readonly>
+                    <input class="w-full bg-yellow-100 rounded p-2" value="{{ \Carbon\Carbon::parse($event->end_date)->format('Y-m-d H:i') }}" readonly>
                 </div>
             </div>
         </div>
@@ -61,25 +61,23 @@
             <!-- Description -->
             <div>
                 <label class="block text-gray-600 font-semibold">Description</label>
-                <textarea class="w-full bg-yellow-100 rounded p-2 h-32 resize-none" readonly>{{ $event['description'] ?? 'No description available' }}</textarea>
+                <textarea class="w-full bg-yellow-100 rounded p-2 h-32 resize-none" readonly>{{ $event->description }}</textarea>
             </div>
 
             <!-- Horizontal Scroll Image -->
             <div>
                 <label class="block text-gray-600 font-semibold mb-2">Event Images</label>
                 <div class="flex overflow-x-auto gap-4 scrollbar-hide">
-                    @if(isset($event['eventimage']) && is_array($event['eventimage']))
-                    @foreach ($event['eventimage'] as $img)
-                    <div class="flex-shrink-0 w-full max-w-md h-70 rounded-lg overflow-hidden border border-gray-300">
-                        <img src="{{ asset('storage/event_images/' . ($img['url'] ?? '')) }}"
-                            alt="Event Image"
-                            class="w-full h-full object-cover"
-                            onerror="this.src='https://placehold.co/400x200/cccccc/333333?text=No+Image';">
+                    @foreach ($event->eventimage as $img)
+                    <div class="flex-shrink-0 w-full max-w-md" style="height: 280px; max-width: 400px; min-width: 300px;">
+                        <div class="h-full w-full rounded-lg overflow-hidden border border-gray-300" style="height: 100%; width: 100%;">
+                            <img src="http://localhost:8000/storage/{{$img->image_path}}"
+                                alt="Event Image"
+                                style="width: 100%; height: 100%; object-fit: cover; min-width: 300px; max-width: 400px; min-height: 200px; max-height: 280px;"
+                                onerror="this.src='https://placehold.co/400x200/cccccc/333333?text=No+Image';">
+                        </div>
                     </div>
                     @endforeach
-                    @else
-                    <p class="text-sm text-gray-500">No images available.</p>
-                    @endif
                 </div>
             </div>
 
@@ -87,23 +85,21 @@
             <div>
                 <label class="block text-gray-600 font-semibold">Ticket Prices</label>
                 <div class="space-y-2 mt-2">
-                    @if(isset($event['tickets']) && is_array($event['tickets']) && count($event['tickets']) > 0)
-                    @foreach ($event['tickets'] as $ticket)
+                    @forelse ($event->tickets as $ticket)
                     <div class="flex gap-2">
-                        <input class="w-1/3 bg-yellow-100 rounded p-2" value="{{ $ticket['ticket_type'] ?? 'General' }}" readonly>
-                        <input class="w-2/3 bg-yellow-100 rounded p-2" value="${{ number_format($ticket['price'] ?? 0, 2) }}" readonly>
+                        <input class="w-1/3 bg-yellow-100 rounded p-2" value="{{ $ticket->type }}" readonly>
+                        <input class="w-2/3 bg-yellow-100 rounded p-2" value="${{ number_format($ticket->price, 2) }}" readonly>
                     </div>
-                    @endforeach
-                    @else
+                    @empty
                     <p class="text-sm text-gray-500">No ticket information available.</p>
-                    @endif
+                    @endforelse
                 </div>
             </div>
 
             <!-- Status Buttons -->
             <div class="flex gap-4">
-                @if (($event['status'] ?? '') === 'pending')
-                <form action="{{ route('events.accept', $event['id'] ?? '') }}" method="POST">
+                @if ($event->status === 'draft')
+                <form action="{{ route('events.accept', $event->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-full">
                         Accept
@@ -113,7 +109,7 @@
                 <button class="px-6 py-2 bg-green-500 text-white rounded-full">Accepted</button>
                 @endif
 
-                <form action="{{ route('events.destroy', $event['id'] ?? '') }}" method="POST">
+                <form action="{{ route('events.destroy', $event->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="px-6 py-2 bg-red-500 text-white rounded-full">Delete</button>

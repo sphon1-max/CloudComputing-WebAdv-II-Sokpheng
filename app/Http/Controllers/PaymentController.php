@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Userticket;
+use App\Models\Events;
 use App\Models\Payment;
 
 
@@ -11,21 +11,26 @@ class PaymentController extends Controller
 {
     public function allPayments()
     {
-        $payments = Userticket::with(['users', 'ticket.event', 'payment'])->orderByDesc('purchase_date')->get();
-        return view('payment', compact('payments')); 
+        $data = $this->getCommissionSummary();
+        return view('payment', $data);
     }
     public function showCommissionSummary()
     {
-        $usertickets = Userticket::with(['payment'])->get();
+        // Get all payments
+        $data = $this->getCommissionSummary();
 
-        $totalCommission = $usertickets->sum(function ($ticket) {
-            return optional($ticket->payment)->amount * 0.10;
+        return view('admin.commission-summary', $data);
+    }
+    private function getCommissionSummary()
+    {
+        $payments = Payment::with(['users', 'ticket.event'])->orderByDesc('payment_date')->get();
+        $payments->each(function ($payment) {
+            $payment->commission = $payment->total * 0.10;
         });
+        $totalPayments = $payments->sum('total');
+        $totalCommission = $totalPayments * 0.10;
 
-        return view('admin.commission-summary', [
-            'usertickets' => $usertickets,
-            'totalCommission' => $totalCommission
-        ]);
+        return compact('payments', 'totalPayments', 'totalCommission');
     }
 
 }

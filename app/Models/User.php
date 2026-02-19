@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
-    protected $primaryKey = 'user_id'; // 👈 important if not using 'id'
+    protected $primaryKey = 'id'; // 👈 important if not using 'id'
 
     protected $hidden = [
         'password',

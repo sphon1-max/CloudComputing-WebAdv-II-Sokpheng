@@ -7,6 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Dashboard Template · Bootstrap v5.0</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/image/mylogo.png') }}">
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
@@ -63,14 +64,14 @@
           <tbody>
           @foreach($v_cate as $cate)
             <tr>
-              <td>{{ $cate->category_id }}</td>
-              <td>{{ $cate->category_name }}</td>
+              <td>{{ $cate->id }}</td>
+              <td>{{ $cate->name }}</td>
               <td>{{ $cate->events_count }}</td>
-              <td>{{ $cate->create_at}}</td>
+              <td>{{ $cate->created_at}}</td>
                   
               <td>
                 <div class="d-flex gap-2">
-                  <form action="{{ route('cate.destroyCate', $cate->category_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                  <form action="{{ route('cate.destroyCate', $cate->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this event?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>

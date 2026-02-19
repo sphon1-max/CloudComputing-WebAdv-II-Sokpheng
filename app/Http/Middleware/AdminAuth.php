@@ -13,7 +13,7 @@ class AdminAuth
     // Check if admin is logged in
     if (!session('admin_logged_in')) {
       Log::info('Admin access denied - not logged in');
-      return redirect('/admin/login')
+      return redirect()->route('admin.login')
         ->with('error', 'Please login to access the admin dashboard.');
     }
 
@@ -21,7 +21,7 @@ class AdminAuth
     if (!session('admin_id') || !session('api_token')) {
       Log::warning('Admin session incomplete - missing required data');
       session()->flush();
-      return redirect('/admin/login')
+      return redirect()->route('admin.login')
         ->with('error', 'Your session is invalid. Please login again.');
     }
 
@@ -33,7 +33,7 @@ class AdminAuth
         'expired_at' => $tokenExpiresAt
       ]);
       session()->flush();
-      return redirect('/admin/login')
+      return redirect()->route('admin.login')
         ->with('error', 'Your session has expired. Please login again.');
     }
 

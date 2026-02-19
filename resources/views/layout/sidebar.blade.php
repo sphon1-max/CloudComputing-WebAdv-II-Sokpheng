@@ -152,7 +152,7 @@
       <div class="sidebar-section-title">Reports</div>
       <ul class="nav flex-column sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link {{ request()->is('payment') ? 'active' : '' }}" href="/payment">
+          <a class="nav-link {{ request()->is('payments') ? 'active' : '' }}" href="/payments">
             <i class="fas fa-credit-card nav-icon"></i>
             Payments
           </a>
